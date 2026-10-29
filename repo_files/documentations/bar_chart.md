@@ -19,7 +19,7 @@ When you change the chart's state, it animates to the new state internally (usin
 |Property|Type|Default|Description|
 |:-------|:---|:------|:----------|
 |barGroups|`List<BarChartGroupData>?`|`const []`|[`BarChart`](https://pub.dev/documentation/fl_chart/latest/fl_chart/BarChart-class.html) draws `barGroups` that each of them contains a list of [`BarChartRodData`](#barchartroddata).|
-|groupsSpace|`double?`|`16`|Apply space between the `barGroups`.<br><br>It is used only when `alignment` is [`BarChartAlignment.start`](#barchartalignment), [`BarChartAlignment.center`](#barchartalignment) or [`BarChartAlignment.end`](#barchartalignment) (the other alignments spread the groups in the free space).|
+|groupsSpace|`double?`|`16`|Apply space between the `barGroups`.<br><br>It is used only when `alignment` is [`BarChartAlignment.start`](#barchartalignment), [`BarChartAlignment.center`](#barchartalignment) or [`BarChartAlignment.end`](#barchartalignment) (the other alignments spread the groups in the free space).<br><br>Groups with a single rod, or rods stacked via [`BarChartGroupData.groupVertically`](#barchartgroupdata), keep this spacing even when `rotationQuarterTurns` makes the group axis shorter than the groups. Groups whose rods sit side by side still spread evenly in that case, so every rod stays in view.|
 |alignment|`BarChartAlignment?`|`BarChartAlignment.spaceEvenly`|Arrange the `barGroups`, see [`BarChartAlignment`](#barchartalignment).|
 |titlesData|`FlTitlesData?`|`const FlTitlesData(topTitles: AxisTitles())`|Holds data to draw the titles around the chart, see [`FlTitlesData`](base_chart.md#fltitlesdata).|
 |barTouchData|`BarTouchData?`|`const BarTouchData()`|Handles touch behaviors and responses.|

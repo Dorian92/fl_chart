@@ -210,7 +210,7 @@
         "name": "groupsSpace",
         "type": "double?",
         "defaultValue": "16",
-        "description": "Apply space between the `barGroups`.\n\nIt is used only when `alignment` is [`BarChartAlignment.start`](#barchartalignment),\n[`BarChartAlignment.center`](#barchartalignment) or [`BarChartAlignment.end`](#barchartalignment) (the other\nalignments spread the groups in the free space)."
+        "description": "Apply space between the `barGroups`.\n\nIt is used only when `alignment` is [`BarChartAlignment.start`](#barchartalignment),\n[`BarChartAlignment.center`](#barchartalignment) or [`BarChartAlignment.end`](#barchartalignment) (the other\nalignments spread the groups in the free space).\n\nGroups with a single rod, or rods stacked via\n[`BarChartGroupData.groupVertically`](#barchartgroupdata), keep this spacing even when\n`rotationQuarterTurns` makes the group axis shorter than the groups.\nGroups whose rods sit side by side still spread evenly in that case,\nso every rod stays in view."
       },
       {
         "name": "alignment",

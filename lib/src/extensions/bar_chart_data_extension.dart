@@ -5,9 +5,17 @@ extension BarChartDataExtension on BarChartData {
     assert(barGroups.isNotEmpty);
     final groupsX = List<double>.filled(barGroups.length, 0);
 
-    var sumWidth =
+    final barsWidth =
         barGroups.map((group) => group.width).reduce((a, b) => a + b);
-    final spaceAvailable = viewWidth - sumWidth;
+    var sumWidth = barsWidth;
+    final spaceAvailable = viewWidth - barsWidth;
+
+    // Side-by-side rods keep the even-spacing fallback on overflow so every
+    // rod stays visible. A single column keeps groupsSpace instead, which is
+    // what a rotated chart needs when the group axis becomes the shorter side.
+    final hasSideBySideRods = barGroups.any(
+      (group) => !group.groupVertically && group.barRods.length > 1,
+    );
 
     void spaceEvenly() {
       final eachSpace = spaceAvailable / (barGroups.length + 1);
@@ -20,6 +28,13 @@ extension BarChartDataExtension on BarChartData {
       });
     }
 
+    void collapseOverflow(double usedWidth) {
+      final barsOverflow = barsWidth > viewWidth;
+      if (usedWidth > viewWidth && (hasSideBySideRods || barsOverflow)) {
+        spaceEvenly();
+      }
+    }
+
     switch (alignment) {
       case BarChartAlignment.start:
         var tempX = 0.0;
@@ -30,9 +45,7 @@ extension BarChartDataExtension on BarChartData {
           final groupSpace = i == barGroups.length - 1 ? 0 : groupsSpace;
           tempX += group.width + groupSpace;
         }
-        if (tempX > viewWidth) {
-          spaceEvenly();
-        }
+        collapseOverflow(tempX);
 
       case BarChartAlignment.end:
         sumWidth += groupsSpace * (barGroups.length - 1);
@@ -46,9 +59,7 @@ extension BarChartDataExtension on BarChartData {
           final groupSpace = i == barGroups.length - 1 ? 0 : groupsSpace;
           tempX += group.width + groupSpace;
         }
-        if (tempX > viewWidth) {
-          spaceEvenly();
-        }
+        collapseOverflow(tempX);
 
       case BarChartAlignment.center:
         sumWidth += groupsSpace * (barGroups.length - 1);
@@ -62,9 +73,7 @@ extension BarChartDataExtension on BarChartData {
           final groupSpace = i == barGroups.length - 1 ? 0 : groupsSpace;
           tempX += group.width + groupSpace;
         }
-        if (tempX > viewWidth) {
-          spaceEvenly();
-        }
+        collapseOverflow(tempX);
 
       case BarChartAlignment.spaceBetween:
         final eachSpace = spaceAvailable / (barGroups.length - 1);

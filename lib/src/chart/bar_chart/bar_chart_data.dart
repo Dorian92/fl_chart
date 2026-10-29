@@ -74,6 +74,12 @@ class BarChartData extends AxisChartData with Equatable {
   /// It is used only when [alignment] is [BarChartAlignment.start],
   /// [BarChartAlignment.center] or [BarChartAlignment.end] (the other
   /// alignments spread the groups in the free space).
+  ///
+  /// Groups with a single rod, or rods stacked via
+  /// [BarChartGroupData.groupVertically], keep this spacing even when
+  /// [rotationQuarterTurns] makes the group axis shorter than the groups.
+  /// Groups whose rods sit side by side still spread evenly in that case,
+  /// so every rod stays in view.
   final double groupsSpace;
 
   /// Arrange the [barGroups], see [BarChartAlignment].
